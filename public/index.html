@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generation Checker</title>
+    <link href="output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen bg-cover bg-center">
+    <div class="w-full max-w-xs p-6 bg-gray-800 rounded-lg shadow-md">
+        <h2 class="text-center text-lg font-bold text-gray-100 mb-4">Enter Your Birth Year</h2>
+        
+        <input id="birthYear" type="number" placeholder="Enter your birth year"
+               class="w-full p-3 mb-4 rounded-md border border-gray-600 text-yellow-200 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+
+        <button id="showGeneration" onclick="checkGeneration()"
+                class="w-full p-3 rounded-md bg-yellow-600 hover:bg-yellow-500 text-gray-900 font-semibold transition-colors">
+            Show Generation
+        </button>
+
+        <div id="outputSuccess" class="hidden mt-4 p-3 rounded-md bg-green-600 text-center text-gray-50 font-semibold">
+            You belong to <span id="generationText"></span>
+        </div>
+        <div id="outputError" class="hidden mt-4 p-3 rounded-md bg-red-600 text-center text-gray-50 font-semibold">
+            Please enter a year from 1900 to 2024
+        </div>
+    </div>
+
+    <script>
+        const backgroundImages = {
+            "silent": "url('silent.jpg')",
+            "boomers": "url('boomers.jpg')",
+            "genX": "url('genx.jpg')",
+            "millennials": "url('millenials.jpg')",
+            "genZ": "url('genz.jpg')"
+        };
+
+        function checkGeneration() {
+            const birthYear = parseInt(document.getElementById('birthYear').value);
+            const outputSuccess = document.getElementById('outputSuccess');
+            const outputError = document.getElementById('outputError');
+            const generationText = document.getElementById('generationText');
+
+            outputSuccess.classList.add('hidden');
+            outputError.classList.add('hidden');
+
+            let generation = "";
+            if (birthYear >= 1900 && birthYear <= 2024) {
+                if (birthYear <= 1945) {
+                    generation = "silent";
+                    generationText.textContent = "the Silent Generation";
+                } else if (birthYear <= 1964) {
+                    generation = "boomers";
+                    generationText.textContent = "Baby Boomers";
+                } else if (birthYear <= 1980) {
+                    generation = "genX";
+                    generationText.textContent = "Generation X";
+                } else if (birthYear <= 1996) {
+                    generation = "millennials";
+                    generationText.textContent = "Millennials";
+                } else {
+                    generation = "genZ";
+                    generationText.textContent = "Gen Z";
+                }
+
+                document.body.style.backgroundImage = backgroundImages[generation];
+                outputSuccess.classList.remove('hidden');
+            } else {
+                outputError.classList.remove('hidden');
+                document.body.style.backgroundImage = ""; 
+            }
+        }
+    </script>
+</body>
+</html>
